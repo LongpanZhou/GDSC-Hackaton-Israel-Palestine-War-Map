@@ -3,12 +3,40 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './EventFilter.css';
 
 function EventFilter() {
+    const [Country, setCountry] = useState('All');
     const [CivilianTargeting, setCivilianTargeting] = useState(false);
+    const [Actor, setActor] = useState('Choose...');
+    const [Event, setEvent] = useState('Choose...');
+    const [Fatalities, setFatalities] = useState('All');
 
-    const set = () => {
+    const handleCountryChange = (value) => {
+        setCountry(value);
+    }
+    
+    const handleAivilianTargetingChange = () => {
         setCivilianTargeting(!CivilianTargeting);
     }
 
+    const handleActorChange = (event) => {
+        setActor(event.target.value);
+    }
+
+    const handleEventChange = (event) => {
+        setEvent(event.target.value);
+        console.log(event.target.value);
+    }
+
+    const handleFatalitiesChange = (value) => {
+        setFatalities(value);
+    }
+
+    const sendData = () => {
+        console.log(Country);
+        console.log(CivilianTargeting);
+        console.log(Actor);
+        console.log(Event);
+        console.log(Fatalities);
+    }
     
     const groups = ['Al Aqsa Martyrs Brigade',
     'Al Nasser Salah al Deen Brigades',
@@ -84,35 +112,35 @@ function EventFilter() {
     'Violence against civilians']
 
     return (
-        <div>
+        <div className='position-fixed bg-black bg-opacity-25 rounded-4' style={{bottom: "15%", left: '1%'}}>
             <ul class="list-group">
                 <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item col-4">Country</li>
-                    <li class="list-group-item">
+                    <li class="list-group-item col-4 bg-transparent border-0 text-light">Country</li>
+                    <li class="list-group-item bg-transparent border-0">
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" defaultChecked/>
-                            <label class="btn btn-outline-primary" for="btnradio1">All</label>
+                            <label class="btn text-light" for="btnradio1" onClick={() => handleCountryChange('All')}>All</label>
 
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"/>
-                            <label class="btn btn-outline-primary" for="btnradio2">Israel</label>
+                            <label class="btn text-light" for="btnradio2" onClick={() => handleCountryChange('Israel')}>Israel</label>
 
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"/>
-                            <label class="btn btn-outline-primary" for="btnradio3">Palstine</label>
+                            <label class="btn text-light" for="btnradio3" onClick={() => handleCountryChange('Palestine')}>Palestine</label>
                         </div>
                     </li>
                 </ul>
 
                 <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item col-4">Civilian Targeting</li>
-                    <li class="list-group-item">
-                        <button type="button" class="btn" data-bs-toggle="button" onClick={set}>{CivilianTargeting ? 'Yes' : 'No'}</button>
+                    <li class="list-group-item col-4 bg-transparent border-0 text-light">Civilian Targeting</li>
+                    <li class="list-group-item bg-transparent border-0">
+                        <button type="button" class="btn text-light border-0" data-bs-toggle="button" onClick={handleAivilianTargetingChange}>{CivilianTargeting ? 'Yes' : 'No'}</button>
                     </li>
                 </ul>
 
                 <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item col-2">Actor</li>
-                    <li class="list-group-item">
-                        <select class="form-select">
+                    <li class="list-group-item col-2 bg-transparent border-0 text-light">Actor</li>
+                    <li class="list-group-item bg-transparent border-0">
+                        <select class="form-select bg-transparent text-light" onChange={handleActorChange}>
                             <option selected>Choose...</option>
                             {groups.map((item, index) => (
                                 <option key={index} value={item}>
@@ -124,9 +152,9 @@ function EventFilter() {
                 </ul>
                 
                 <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item col-2">Event</li>
-                    <li class="list-group-item col-6">
-                        <select class="form-select">
+                    <li class="list-group-item col-2 bg-transparent border-0 text-light">Event</li>
+                    <li class="list-group-item col-6 bg-transparent border-0">
+                        <select class="form-select bg-transparent text-light" onChange={handleEventChange}>
                             <option selected>Choose...</option>
                             {events.map((item, index) => (
                                 <option key={index} value={item}>
@@ -138,16 +166,17 @@ function EventFilter() {
                 </ul>
                 
                 <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item col-2">Fatalities</li>
-                    <li class="list-group-item col-6 ">
+                    <li class="list-group-item col-2 bg-transparent border-0 text-light">Fatalities</li>
+                    <li class="list-group-item col-6 bg-transparent border-0 text-light">
                         <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary">All</button>
-                            <button type="button" class="btn btn-outline-primary btn-outline-success">0</button>
-                            <button type="button" class="btn btn-outline-primary btn-outline-warning">1-10</button>
-                            <button type="button" class="btn btn-outline-primary btn-outline-orange">10-50</button>
-                            <button type="button" class="btn btn-outline-primary btn-outline-danger">50+</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-light">All</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-green" onClick={() => handleFatalitiesChange(0)}>&nbsp;0&nbsp;</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-warning" onClick={() => handleFatalitiesChange(1)}>1-10</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-orange" onClick={() => handleFatalitiesChange(10)}>10-50</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-danger" onClick={() => handleFatalitiesChange(50)}>50+</button>
                         </div>
                     </li>
+                    <button type="button" class="btn float-right text-light" style={{marginLeft: "20%"}} onClick={sendData}>Search</button>
                 </ul>
 
             </ul>

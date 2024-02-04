@@ -43,3 +43,49 @@
 .show > .btn-outline-orange.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 128, 0, 0.25);
 }
+
+.btn-outline-green {
+  color: #80FF80;
+  border-color: #80FF80;
+}
+
+.btn-outline-warning:hover {
+  color: #ffff;
+}
+
+.btn-outline-green:hover {
+  color: #fff;
+  background-color: #61ff61;
+  border-color: #61ff61;
+}
+
+.btn-outline-green.focus,
+.btn-outline-green:focus {
+  box-shadow: 0 0 0 0.2rem rgba(128, 255, 128, 0.25);
+}
+
+.btn-outline-green.disabled,
+.btn-outline-green:disabled {
+  color: #61ff61;
+  background-color: transparent;
+}
+
+.btn-outline-green:not(:disabled):not(.disabled).active,
+.btn-outline-green:not(:disabled):not(.disabled):active,
+.show > .btn-outline-green.dropdown-toggle {
+  color: #fff;
+  background-color: #61ff61;
+  border-color: #61ff61;
+}
+
+.btn-outline-warning:not(:disabled):not(.disabled).active,
+.btn-outline-warning:not(:disabled):not(.disabled):active,
+.show > .btn-outline-green.dropdown-toggle {
+  color: #fff;
+}
+
+.btn-outline-green:not(:disabled):not(.disabled).active:focus,
+.btn-outline-green:not(:disabled):not(.disabled):active:focus,
+.show > .btn-outline-green.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(128, 255, 128, 0.25);
+}
