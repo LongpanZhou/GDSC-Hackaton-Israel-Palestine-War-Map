@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useDateTime } from './DateTimeContext';
+import { search } from './EventFilter';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { initMap } from './GoogleMap';
 
 function DateRange() {
+  const { Datetime, setDatetime, Country, setCountry, CivilianTargeting, setCivilianTargeting, Actor, setActor, Event, setEvent, Fatalities, setFatalities } = useDateTime();
   const [date, setDate] = useState(0);
   const handleDateChange = (event) => {
     setDate(event.target.value);
-    initMap();
+    search(setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, convertNumberToDate(date), Country, CivilianTargeting, Actor, Event, Fatalities);
   };
 
   const convertNumberToDate = (num) => {

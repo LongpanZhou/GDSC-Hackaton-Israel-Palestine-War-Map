@@ -1,13 +1,23 @@
 import React, {useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './EventFilter.css';
+import { initMap } from './GoogleMap';
+import { useDateTime } from './DateTimeContext';
+
+export const search = (setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, Datetime, Country, CivilianTargeting, Actor, Event, Fatalities) => {
+    setDatetime(Datetime);
+    setCountry(Country);
+    setCivilianTargeting(CivilianTargeting);
+    setActor(Actor);
+    setEvent(Event);
+    setFatalities(Fatalities);
+
+    initMap(Datetime, Country, CivilianTargeting, Actor, Event, Fatalities);
+};
+
 
 function EventFilter() {
-    const [Country, setCountry] = useState('All');
-    const [CivilianTargeting, setCivilianTargeting] = useState(false);
-    const [Actor, setActor] = useState('Choose...');
-    const [Event, setEvent] = useState('Choose...');
-    const [Fatalities, setFatalities] = useState('All');
+    const { Datetime, setDatetime, Country, setCountry, CivilianTargeting, setCivilianTargeting, Actor, setActor, Event, setEvent, Fatalities, setFatalities } = useDateTime();
 
     const handleCountryChange = (value) => {
         setCountry(value);
@@ -31,11 +41,7 @@ function EventFilter() {
     }
 
     const sendData = () => {
-        console.log(Country);
-        console.log(CivilianTargeting);
-        console.log(Actor);
-        console.log(Event);
-        console.log(Fatalities);
+        search(setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, Datetime, Country, CivilianTargeting, Actor, Event, Fatalities);
     }
     
     const groups = ['Al Aqsa Martyrs Brigade',
