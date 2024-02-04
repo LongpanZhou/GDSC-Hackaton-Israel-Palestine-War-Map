@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const initMap = (DateTime,Country,Civilian,Actor,Event,Fatalities) => {
-    console.log(DateTime,Country,Civilian,Actor,Event,Fatalities);
+export const initMap = (points) => {
+    // console.log(DateTime,Country,Civilian,Actor,Event,Fatalities);
     
     function getMarkerIcon(color) {
         return {

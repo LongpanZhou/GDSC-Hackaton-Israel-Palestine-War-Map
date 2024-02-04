@@ -4,6 +4,7 @@ import './EventFilter.css';
 import { initMap } from './GoogleMap';
 import { useDateTime } from './DateTimeContext';
 import axios from 'axios';
+import { API_URL } from '../config.js';
 
 export const search = async (setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, Datetime, Country, CivilianTargeting, Actor, Event, Fatalities) => {
     setDatetime(Datetime);
@@ -12,21 +13,57 @@ export const search = async (setDatetime, setCountry, setCivilianTargeting, setA
     setActor(Actor);
     setEvent(Event);
     setFatalities(Fatalities);
+    
+    function parseEventData(data) {
+        var points = [];
 
-   const res = await axios.get("http://localhost:5000/casualty", {
-     params: {
-       DateTime: Datetime,
-       Country: Country,
-       Civilian: CivilianTargeting,
-       Actor: Actor,
-       Event: Event,
-       Fatalities: Fatalities,
-     },
-   });
+        // data.forEach(function(event) {
+        //     console.log(event);
+        //     var lat = event.latitude;
+        //     var lng = event.longitude;
+        //     var color = getColorBasedOnFatalities(event.fatalities);
+        //     var info = generateInfoString(event);
+        
+        //     points.push({ lat: lat, lng: lng, color: color, info: info });
+        // });
+    
+        return points;
+    }
+    
+    function getColorBasedOnFatalities(fatalities) {
+        if (fatalities === 0) {
+            return 'green';
+        } else if (fatalities <= 10) {
+            return 'yellow';
+        } else if (fatalities <= 50) {
+            return 'orange';
+        } else {
+            return 'red';
+        }
+    }
+    
+    function generateInfoString(event) {
+        return 'Location: ' + event.location + '\n' +
+               'Fatalities: ' + event.fatalities + '\n' +
+               'Actor: ' + event.actor1 + '\n' +
+               'Civilian: ' + event.civilian_targeting + '\n' +
+               'Event: ' + event.event_type + '\n' +
+               'Notes: ' + event.notes;
+    }    
 
-    initMap(Datetime, Country, CivilianTargeting, Actor, Event, Fatalities);
-};
+    const res = await axios.get(`${API_URL}/casualty`, {
+        params: {
+        DateTime: Datetime,
+        Country: Country,
+        Civilian: CivilianTargeting,
+        Actor: Actor,
+        Event: Event,
+        Fatalities: Fatalities,
+        },
+    });
 
+    initMap(parseEventData(res.data));
+}; 
 
 function EventFilter() {
     const { Datetime, setDatetime, Country, setCountry, CivilianTargeting, setCivilianTargeting, Actor, setActor, Event, setEvent, Fatalities, setFatalities } = useDateTime();
@@ -188,10 +225,10 @@ function EventFilter() {
                     <li class="list-group-item col-6 bg-transparent border-0 text-light">
                         <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic outlined example">
                             <button type="button" class="btn btn-outline-primary btn-outline-light">All</button>
-                            <button type="button" class="btn btn-outline-primary btn-outline-green" onClick={() => handleFatalitiesChange(0)}>&nbsp;0&nbsp;</button>
-                            <button type="button" class="btn btn-outline-primary btn-outline-warning" onClick={() => handleFatalitiesChange(1)}>1-10</button>
-                            <button type="button" class="btn btn-outline-primary btn-outline-orange" onClick={() => handleFatalitiesChange(10)}>10-50</button>
-                            <button type="button" class="btn btn-outline-primary btn-outline-danger" onClick={() => handleFatalitiesChange(50)}>50+</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-green" onClick={() => handleFatalitiesChange("0")}>&nbsp;0&nbsp;</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-warning" onClick={() => handleFatalitiesChange("1-10")}>1-10</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-orange" onClick={() => handleFatalitiesChange("10-50")}>10-50</button>
+                            <button type="button" class="btn btn-outline-primary btn-outline-danger" onClick={() => handleFatalitiesChange("50+")}>50+</button>
                         </div>
                     </li>
                     <button type="button" class="btn float-right text-light" style={{marginLeft: "20%"}} onClick={sendData}>Search</button>
