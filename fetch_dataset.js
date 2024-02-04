@@ -18,7 +18,6 @@ function initMap() {
 }
 
 function createMarkers(results) {
-    console.log(results);
     results.forEach(item => {
         const latLng = new google.maps.LatLng(item.latitude, item.longitude);
         const fatalities = item.fatalities;
