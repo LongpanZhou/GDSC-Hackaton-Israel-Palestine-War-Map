@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { initMap } from './GoogleMap';
 
 function DateRange() {
   const [date, setDate] = useState(0);
   const handleDateChange = (event) => {
     setDate(event.target.value);
-    
+    initMap();
   };
 
   const convertNumberToDate = (num) => {
