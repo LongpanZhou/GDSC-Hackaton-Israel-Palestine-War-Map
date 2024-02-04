@@ -3,14 +3,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './EventFilter.css';
 import { initMap } from './GoogleMap';
 import { useDateTime } from './DateTimeContext';
+import axios from 'axios';
 
-export const search = (setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, Datetime, Country, CivilianTargeting, Actor, Event, Fatalities) => {
+export const search = async (setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, Datetime, Country, CivilianTargeting, Actor, Event, Fatalities) => {
     setDatetime(Datetime);
     setCountry(Country);
     setCivilianTargeting(CivilianTargeting);
     setActor(Actor);
     setEvent(Event);
     setFatalities(Fatalities);
+
+   const res = await axios.get("http://localhost:5000/casualty", {
+     params: {
+       DateTime: Datetime,
+       Country: Country,
+       Civilian: CivilianTargeting,
+       Actor: Actor,
+       Event: Event,
+       Fatalities: Fatalities,
+     },
+   });
 
     initMap(Datetime, Country, CivilianTargeting, Actor, Event, Fatalities);
 };
@@ -40,8 +52,8 @@ function EventFilter() {
         setFatalities(value);
     }
 
-    const sendData = () => {
-        search(setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, Datetime, Country, CivilianTargeting, Actor, Event, Fatalities);
+    const sendData = async () => {
+        await search(setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, Datetime, Country, CivilianTargeting, Actor, Event, Fatalities);
     }
     
     const groups = ['Al Aqsa Martyrs Brigade',
@@ -124,13 +136,13 @@ function EventFilter() {
                     <li class="list-group-item col-4 bg-transparent border-0 text-light">Country</li>
                     <li class="list-group-item bg-transparent border-0">
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" defaultChecked/>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autoComplete="off" defaultChecked/>
                             <label class="btn text-light" for="btnradio1" onClick={() => handleCountryChange('All')}>All</label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"/>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autoComplete="off"/>
                             <label class="btn text-light" for="btnradio2" onClick={() => handleCountryChange('Israel')}>Israel</label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"/>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autoComplete="off"/>
                             <label class="btn text-light" for="btnradio3" onClick={() => handleCountryChange('Palestine')}>Palestine</label>
                         </div>
                     </li>

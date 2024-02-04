@@ -60,5 +60,6 @@ if __name__ == "__main__":
         'CiviTarget': False,
         'Actor1': 'All',
         'Event_Type': 'All',
-        'fatalities': 'All'}
+        'fatalities': 'All'
+        }
     main(test)
