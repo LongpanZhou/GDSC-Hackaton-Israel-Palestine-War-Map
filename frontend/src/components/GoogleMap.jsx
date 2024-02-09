@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 export const initMap = (points = []) => {
   function getMarkerIcon(color) {
@@ -39,7 +38,7 @@ export const GoogleMap = () => {
   useEffect(() => {
     const loadMap = async () => {
       try {
-        const apiKey = "AIzaSyAqoZN1fgWknLiM_nYOb4WOKKlHF0JbU34"; // Replace with your actual API key
+        const apiKey = "AIzaSyAqoZN1fgWknLiM_nYOb4WOKKlHF0JbU34"; // Replace with your API key
         const apiUrl = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=visualization&callback=initMap`;
         await loadScript(apiUrl);
       } catch (error) {
@@ -53,7 +52,7 @@ export const GoogleMap = () => {
         script.type = "text/javascript";
         script.src = url;
         script.onload = () => {
-          initMap([]); // Call initMap only after the script has been loaded
+          initMap([]);
           resolve();
         };
         script.onerror = reject;

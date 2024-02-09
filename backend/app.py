@@ -3,10 +3,34 @@ from flask_cors import CORS
 import pandas as pd
 from datetime import datetime
 import numpy as np
+from io import StringIO
+import requests
+import csv
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
+def download_csv():
+    td = datetime.today().strftime('%Y-%m-%d')
+    parameters = {
+    "email": "guoz88@mcmaster.ca",
+    "key": "AtGm2ZvQ8lH0EBIwWtqH",
+    "region": "11",
+    "country": "Israel|Palestine", 
+    "event_date": f"2023-10-01|{td}",
+    "event_date_where": "BETWEEN",
+    "limit": 99999,
+    }
+    print("Downloading CSV file...")
+    response = requests.get("https://api.acleddata.com/acled/read.csv", params= parameters)
+
+    if response.status_code == 200:
+        df = pd.read_csv(StringIO(response.text))
+        print("CSV file downloaded successfully.")
+    else:
+        print('Failed to download CSV file. Status code:', response.status_code)
+    
+    return df
 
 def query(DateTime, Country, Civilian, Actor, Event, Fatalities):
     df = pd.read_csv("2023-10-01-2024-01-29-Middle_East-Israel-Palestine.csv")
@@ -17,12 +41,12 @@ def query(DateTime, Country, Civilian, Actor, Event, Fatalities):
         return DataFrame[DataFrame["event_date"] == formatted_date_str]
 
     def extract_Country(DataFrame, Country):
-        if Country == "All":  # All, Israel, Palestine
+        if Country == "All":
             return DataFrame
         return DataFrame[DataFrame["country"] == Country]
 
     def extract_CiviTarget(DataFrame, CiviTarget):
-        if CiviTarget:  # True or False
+        if CiviTarget:
             return DataFrame[DataFrame["civilian_targeting"] == "Civilian targeting"]
         return DataFrame
 

@@ -64,19 +64,19 @@ export const search = async (
     return (
       "Location: " +
       event.location +
-      "\n" +
+      "<br>" +
       "Fatalities: " +
       event.fatalities +
-      "\n" +
+      "<br>" +
       "Actor: " +
       event.actor1 +
-      "\n" +
+      "<br>" +
       "Civilian: " +
       event.civilian_targeting +
-      "\n" +
+      "<br>" +
       "Event: " +
       event.event_type +
-      "\n" +
+      "<br><br>" +
       "Notes: " +
       event.notes
     );
