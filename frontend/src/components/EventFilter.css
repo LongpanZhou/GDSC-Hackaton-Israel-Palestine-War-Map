@@ -89,3 +89,7 @@
 .show > .btn-outline-green.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(128, 255, 128, 0.25);
 }
+
+.form-select option {
+  color: black;
+}

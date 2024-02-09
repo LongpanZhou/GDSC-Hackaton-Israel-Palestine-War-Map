@@ -1,2 +1,0 @@
-https://api.acleddata.com/acled/read.json?key=AtGm2ZvQ8lH0EBIwWtqH&email=guoz88@mcmaster.ca&c
-ountry=Israel|Palestine&event_date=2023-10-1|2024-02-1&event_date=BETWEEN
