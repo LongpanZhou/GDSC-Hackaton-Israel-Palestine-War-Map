@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function DateRange() {
   const { Datetime, setDatetime, Country, setCountry, CivilianTargeting, setCivilianTargeting, Actor, setActor, Event, setEvent, Fatalities, setFatalities } = useDateTime();
   const [date, setDate] = useState(0);
+  const todayDate = new Date().toISOString().slice(0, 10); // Get today's date in 'YYYY-MM-DD' format
+
   const handleDateChange = async (event) => {
     setDate(event.target.value);
     await search(setDatetime, setCountry, setCivilianTargeting, setActor, setEvent, setFatalities, convertNumberToDate(date), Country, CivilianTargeting, Actor, Event, Fatalities);
@@ -18,11 +20,20 @@ function DateRange() {
     return targetDate.toLocaleDateString('en-US', options);
   };
 
+  const convertDateToNumber = (dateString) => {
+    const startDate = new Date('2023-10-01');
+    const targetDate = new Date(dateString);
+    const difference = targetDate.getTime() - startDate.getTime();
+    const numDays = Math.floor(difference / (24 * 60 * 60 * 1000));
+    return numDays;
+  };
+
+
   return (
     <nav class="navbar navbar-light bg-light position-fixed bottom-0 container-fluid justify-content-center bg-transparent mb-5">
         <div className='container justify-content-center bg-black bg-opacity-25 rounded-4 p-2'>
             <label htmlFor="Date" class="form-label h5 text-light">Date: {convertNumberToDate(date)}</label>
-            <input type="range" class="form-range" min="1" max="111" step="1" id="Date" value={date} onChange={handleDateChange}/>
+            <input type="range" class="form-range" min="1" max={convertDateToNumber(todayDate)} step="1" id="Date" value={date} onChange={handleDateChange}/>
         </div>
     </nav>
   )

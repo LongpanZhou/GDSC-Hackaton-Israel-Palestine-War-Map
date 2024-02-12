@@ -32,12 +32,14 @@ def download_csv():
     
     return df
 
+DF = download_csv()
 def query(DateTime, Country, Civilian, Actor, Event, Fatalities):
-    df = pd.read_csv("2023-10-01-2024-01-29-Middle_East-Israel-Palestine.csv")
+    df = DF.copy()
 
     def extract_DateTime(DataFrame, DateTime):
         original_date = datetime.strptime(DateTime, "%B %d, %Y")
-        formatted_date_str = original_date.strftime("%d %B %Y")
+        # formatted_date_str = original_date.strftime("%d %B %Y")
+        formatted_date_str = original_date.strftime("%Y-%m-%d")
         return DataFrame[DataFrame["event_date"] == formatted_date_str]
 
     def extract_Country(DataFrame, Country):
