@@ -22,6 +22,6 @@ python -m flask --app app.py --debug run
 
 ## Issues/Todos
 * In filter section, the drop down menu for windows users are appearing white and hard to see (CSS)             ✅ Completed
-* Implement live fetch for data using [ACLED API](https://apidocs.acleddata.com/) - Local in current stage
-* Google maps refreshes when initMap() is called, make it to refresh the markers only.
+* Implement live fetch for data using [ACLED API](https://apidocs.acleddata.com/) - Local in current stage      ✅ Completed
+* Google maps refreshes when initMap() is called, make it to refresh the markers only.                          ✅ Completed
 * Host the website (Maybe)

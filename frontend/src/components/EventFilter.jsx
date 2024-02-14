@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./EventFilter.css";
-import { initMap } from "./GoogleMap";
+import { plotPoints, initMap } from "./GoogleMap";
 import { useDateTime } from "./DateTimeContext";
 import axios from "axios";
 import { API_URL } from "../config.js";
@@ -94,7 +94,7 @@ export const search = async (
   });
 
   const points = parseEventData(res.data);
-  initMap(points);
+  plotPoints(points);
 };
 
 function EventFilter() {

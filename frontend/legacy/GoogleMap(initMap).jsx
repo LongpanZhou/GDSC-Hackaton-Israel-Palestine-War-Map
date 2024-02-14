@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-let map;
-let markers = [];
-
-export const plotPoints = (points = []) => {
-  markers.forEach((_) => {
-    _.setMap(null);
-  });
-  markers = [];
-
+export const initMap = (points = []) => {
   function getMarkerIcon(color) {
     return {
       path: window.google.maps.SymbolPath.CIRCLE,
@@ -20,7 +12,12 @@ export const plotPoints = (points = []) => {
     };
   }
 
-  points.forEach(function (point) {;
+  const map = new window.google.maps.Map(document.getElementById("map"), {
+    center: { lat: 31.5, lng: 35.2201 },
+    zoom: 8,
+  });
+
+  points.forEach(function (point) {
     var marker = new window.google.maps.Marker({
       position: { lat: point.lat, lng: point.lng },
       map: map,
@@ -28,21 +25,12 @@ export const plotPoints = (points = []) => {
       icon: getMarkerIcon(point.color),
     });
 
-    markers.push(marker);
-
     marker.addListener("click", function () {
       var infoWindow = new window.google.maps.InfoWindow({
         content: point.info,
       });
       infoWindow.open(map, marker);
     });
-  });
-}
-
-export const initMap = () => {
-    map = new window.google.maps.Map(document.getElementById("map"), {
-    center: { lat: 31.5, lng: 35.2201 },
-    zoom: 8,
   });
 };
 
